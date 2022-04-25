@@ -6,8 +6,11 @@ import org.junit.Test;
 import org.yakindu.sct.model.sgraph.State;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.sgraph.Transition;
+import org.yakindu.sct.model.stext.stext.EventDefinition;
+import org.yakindu.sct.model.stext.stext.VariableDefinition;
 
 import hu.bme.mit.model2gml.Model2GML;
+import hu.bme.mit.yakindu.analysis.example.IExampleStatemachine;
 import hu.bme.mit.yakindu.analysis.modelmanager.ModelManager;
 
 public class Main {
@@ -27,16 +30,17 @@ public class Main {
 		Statechart s = (Statechart) root;
 		TreeIterator<EObject> iterator = s.eAllContents();
 		int id = 0;
+		System.out.println("public static void print(IExampleStatemachine s) {");
 		while (iterator.hasNext()) {
 			EObject content = iterator.next();
-			if(content instanceof State) {
+			/*if(content instanceof State) {
 				State state = (State) content;
 				if(state.getName() != "" && state.getName() != null) {
 					System.out.println(state.getName());
 				} else {
 					String name = "UnknownName" + id++;
 					System.out.println(name);
-					state.setName(name);
+					state.setName();
 				}
 				
 				if(state.getOutgoingTransitions().isEmpty()) {
@@ -47,7 +51,22 @@ public class Main {
 				Transition t = (Transition) content;
 				System.out.println(t.getSource().getName() + " -> " + t.getTarget().getName());
 			}
+			if(content instanceof EventDefinition) {
+				EventDefinition ed = (EventDefinition) content;
+				System.out.println(ed.getName());
+			}
+			*/
+			
+			if(content instanceof VariableDefinition) {
+				VariableDefinition vd = (VariableDefinition) content;
+				System.out.println("\tSystem.out.println(\""+ vd.getName().toUpperCase().charAt(0) +
+						" = \" + s.getSCInterface().get"+ vd.getName().toUpperCase().charAt(0) + vd.getName().substring(1) +"());");
+			}
+			
+			
+			
 		}
+		System.out.println("}");
 		// Transforming the model into a graph representation
 		String content = model2gml.transform(root);
 		// and saving it
