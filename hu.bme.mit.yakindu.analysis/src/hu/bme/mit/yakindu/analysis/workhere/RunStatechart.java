@@ -28,16 +28,16 @@ public class RunStatechart {
 			switch(line) {
 				case "start": 
 					s.raiseStart();
-					
 					break;
+					
 				case "white": 
 					s.raiseWhite();
-					
 					break;
+					
 				case "black": 
 					s.raiseBlack();
-					
 					break;
+					
 				case "exit":
 					exit = true;
 					break;
