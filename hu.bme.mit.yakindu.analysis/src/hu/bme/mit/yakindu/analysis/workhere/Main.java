@@ -26,12 +26,19 @@ public class Main {
 		// Reading model
 		Statechart s = (Statechart) root;
 		TreeIterator<EObject> iterator = s.eAllContents();
-		
+		int id = 0;
 		while (iterator.hasNext()) {
 			EObject content = iterator.next();
 			if(content instanceof State) {
 				State state = (State) content;
-				System.out.println(state.getName());
+				if(state.getName() != "" && state.getName() != null) {
+					System.out.println(state.getName());
+				} else {
+					String name = "UnknownName" + id++;
+					System.out.println(name);
+					state.setName(name);
+				}
+				
 				if(state.getOutgoingTransitions().isEmpty()) {
 					System.out.println(state.getName() + " is a trap state");
 				}
